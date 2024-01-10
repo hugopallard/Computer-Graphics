@@ -211,21 +211,21 @@ public class DrawPanel extends JPanel implements MouseListener {
         int n = bezierPoints.size() - 1;
 
         Point prevPoint = null;
-        for (double t = 0; t <= 1.0; t += 0.01) {
-            int x = 0;
-            int y = 0;
+        for (double t = 0; t <= 1.0; t += 0.0001) {
+            double x = 0;
+            double y = 0;
 
             for (int i = 0; i <= n; i++) {
                 double basis = binomialCoefficient(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
-                x += (int) (basis * bezierPoints.get(i).x);
-                y += (int) (basis * bezierPoints.get(i).y);
+                x += (basis * bezierPoints.get(i).x);
+                y += (basis * bezierPoints.get(i).y);
             }
 
             if (prevPoint != null) {
-                g2d.drawLine(prevPoint.x, prevPoint.y, x, y);
+                g2d.drawLine(prevPoint.x, prevPoint.y, (int) x, (int) y);
             }
 
-            prevPoint = new Point(x, y);
+            prevPoint = new Point((int) x, (int) y);
         }
 
         bezierPoints.clear();
